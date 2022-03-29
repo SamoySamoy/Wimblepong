@@ -391,56 +391,6 @@ static void draw_ball() {
 	}
 }
 
-static void draw_net() {
-	SDL_Rect net;
-	
-	net.x = screen->w / 2;
-	net.y = 20;
-	net.w = 5;
-	net.h = 15;
-
-	//draw the net
-	for(int i = 0; i < 15; i++) {
-		
-		int r = SDL_FillRect(screen, &net, 0xffffffff);
-	
-		if (r != 0) { 
-			printf("fill rectangle faliled in func draw_net()");
-		}
-		net.y = net.y + 30;
-	}
-}
-
-static void draw_ball() {
-	SDL_Rect src;
-
-	src.x = ball.x;
-	src.y = ball.y;
-	src.w = ball.w;
-	src.h = ball.h;
-	
-	int r = SDL_FillRect(screen , &src, 0xffffffff);
-	if (r !=0){
-		printf("fill rectangle faliled in func drawball()");
-	}
-}
-
-static void draw_paddle() {
-	SDL_Rect src;
-	for (int i = 0; i < 2; i++) {
-	
-		src.x = paddle[i].x;
-		src.y = paddle[i].y;
-		src.w = paddle[i].w;
-		src.h = paddle[i].h;
-	
-		int r = SDL_FillRect(screen, &src, 0xffffffff);		
-		if (r !=0) {		
-			printf("fill rectangle faliled in func draw_paddle()");
-		}
-	}
-}
-
 static void draw_paddle() {
 	SDL_Rect src;
 	for (int i = 0; i < 2; i++) {

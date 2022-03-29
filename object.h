@@ -50,8 +50,6 @@ static void draw_menu();
 static void draw_background();
 static void draw_net();
 static void draw_ball();
-static void draw_net();
-static void draw_ball();
 static void draw_paddle();
 static void draw_player_0_score();
 static void draw_player_1_score();

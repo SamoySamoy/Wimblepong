@@ -1,7 +1,12 @@
 #include "object.h"
 #include "object.cpp"
-
+ 
 int main (int argc, char *args[]) {
+    //SDL Window setup
+	if (init(SCREEN_WIDTH, SCREEN_HEIGHT, argc, args) == 1) {
+		
+		return 0;
+	}
 	SDL_GetWindowSize(window, &width, &height);
 	int sleep = 0;
 	int quit = 0;
