@@ -4,44 +4,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstring>
+#include "object.h"
 
-const int SCREEN_WIDTH = 640;	//window height
-const int SCREEN_HEIGHT = 480;	//window width
 
-//function prototypes
 //initilise SDL
 int init(int w, int h, int argc, char *args[]);
-
-typedef struct ball_s {
-
-	int x, y; /* position on the screen */
-	int w,h; // ball width and height
-	int dx, dy; /* movement vector */
-} ball_t;
-
-typedef struct paddle {
-
-	int x,y;
-	int w,h;
-} paddle_t;
-
-// Program globals
-static ball_t ball;
-static paddle_t paddle[2];
-int score[] = {0,0};
-int width, height;		//used if fullscreen
-
-SDL_Window* window = NULL;	//The window we'll be rendering to
-SDL_Renderer *renderer;		//The renderer SDL will use to draw to the screen
-
-//surfaces
-static SDL_Surface *screen;
-static SDL_Surface *title;
-static SDL_Surface *numbermap;
-static SDL_Surface *end;
-
-//textures
-SDL_Texture *screen_texture;
 
 //inisilise starting position and sizes of game elemements
 static void init_game() {
