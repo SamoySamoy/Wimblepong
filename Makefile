@@ -1,2 +1,2 @@
 all:
-	gcc -o pong pong.cpp -lmingw32 -lSDL2main -lSDL2
+	gcc -o main main.cpp -lmingw32 -lSDL2main -lSDL2
