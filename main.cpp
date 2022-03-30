@@ -1,9 +1,9 @@
-#include "object.h"
 #include "object.cpp"
 #include "pong.cpp"
+#include "interface.cpp"
  
 int main (int argc, char *args[]) {
-	sdl_init(SCREEN_WIDTH, SCREEN_HEIGHT, argc, args);
 	run();
+	return 0;
 }
 

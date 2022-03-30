@@ -1,10 +1,8 @@
-#pragma once
-#include "object.h"
+#include "pong.h"
 #include "object.cpp"
 
-using namespace std;
 void run() {
-    SDL_GetWindowSize(window, &width, &height);
+    sdl_init(SCREEN_WIDTH, SCREEN_HEIGHT);
 	int sleep = 0;
 	int quit = 0;
 	int state = 0;
@@ -55,11 +53,7 @@ void run() {
 			//check score
 			r = check_score();
 			//if either player wins, change to game over state
-			if (r == 1) {
-				state = 2;	
-			} else if (r == 2) {
-				state = 2;	
-			}
+			if (r == 1 || r == 2) state = 2;
 			move_paddle_ai();
 			// Move the balls for the next frame. 
 			move_ball();
@@ -89,10 +83,8 @@ void run() {
 
 	//free renderer and all textures used with it
 	SDL_DestroyRenderer(renderer);
-	
 	//Destroy window 
 	SDL_DestroyWindow(window);
-
 	//Quit SDL subsystems 
 	SDL_Quit(); 
 }
