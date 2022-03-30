@@ -1,2 +1,2 @@
 all:
-	gcc -o main main.cpp -lmingw32 -lSDL2main -lSDL2
+	gcc main.cpp -o main -lmingw32 -lSDL2main -lSDL2

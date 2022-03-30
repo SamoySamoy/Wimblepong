@@ -1,3 +1,4 @@
+#pragma once
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -5,46 +6,18 @@
 #include "object.h"
 using namespace std;
 
-int init(int width, int height, int argc, char *args[]) {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-		return 1;
-	} 
+int sdl_init(int width, int height, int argc, char *args[]) {
     SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN, &window, &renderer);
-	if (window == NULL) { 
-		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-		return 1;
-	}
 	//create the screen sruface where all the elemnts will be drawn onto (ball, paddles, net etc)
 	screen = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA32);
-	if (screen == NULL) {
-		printf("Could not create the screen surfce! SDL_Error: %s\n", SDL_GetError());
-		return 1;
-	}
 	//create the screen texture to render the screen surface to the actual display
 	screen_texture = SDL_CreateTextureFromSurface(renderer, screen);
-	if (screen_texture == NULL) {
-		printf("Could not create the screen_texture! SDL_Error: %s\n", SDL_GetError());
-		return 1;
-	}
 	//Load the title image
 	title = SDL_LoadBMP("title.bmp");
-	if (title == NULL) {
-		printf("Could not Load title image! SDL_Error: %s\n", SDL_GetError());
-		return 1;
-	}
 	//Load the numbermap image
 	numbermap = SDL_LoadBMP("numbermap.bmp");
-	if (numbermap == NULL) {
-		printf("Could not Load numbermap image! SDL_Error: %s\n", SDL_GetError());
-		return 1;
-	}
 	//Load the gameover image
 	end = SDL_LoadBMP("gameover.bmp");
-	if (end == NULL) {
-		printf("Could not Load title image! SDL_Error: %s\n", SDL_GetError());
-		return 1;
-	}
 	// Set the title colourkey. 
 	Uint32 colorkey = SDL_MapRGB(title->format, 255, 0, 255);
 	SDL_SetColorKey(title, SDL_TRUE, colorkey);
@@ -52,7 +25,7 @@ int init(int width, int height, int argc, char *args[]) {
 	return 0;
 }
 
-static void init_game() {
+void init_game() {
 	
 	ball.x = screen->w / 2;
 	ball.y = screen->h / 2;
@@ -125,7 +98,7 @@ int check_collision(ball_t a, paddle_t b) {
 	return 1;
 }
 
-static void move_ball() {
+void move_ball() {
 	
 	/* Move the ball by its motion vector. */
 	ball.x += ball.dx;
@@ -217,7 +190,7 @@ static void move_ball() {
 	}
 }
 
-static void move_paddle_ai() {
+void move_paddle_ai() {
 	int center = paddle[0].y + 25;
 	int screen_center = screen->h / 2 - 25;
 	int ball_speed = ball.dy;
@@ -262,7 +235,7 @@ static void move_paddle_ai() {
 	}
 }
 
-static void move_paddle(int d) {
+void move_paddle(int d) {
 	// if the down arrow is pressed move paddle down
 	if (d == 0) {		
 		if(paddle[1].y >= screen->h - paddle[1].h) {		
@@ -281,7 +254,7 @@ static void move_paddle(int d) {
 	}
 }
 
-static void draw_game_over(int p) { 
+void draw_game_over(int p) { 
 
 	SDL_Rect p1;
 	SDL_Rect p2;
@@ -321,7 +294,7 @@ static void draw_game_over(int p) {
 	
 }
 
-static void draw_menu() {
+void draw_menu() {
 	SDL_Rect src;
 	SDL_Rect dest;
 
@@ -338,7 +311,7 @@ static void draw_menu() {
 	SDL_BlitSurface(title, &src, screen, &dest);
 }
 
-static void draw_background() {
+void draw_background() {
  
 	SDL_Rect src;
 	
@@ -357,7 +330,7 @@ static void draw_background() {
 	//}
 }
 
-static void draw_net() {
+void draw_net() {
 
 	SDL_Rect net;
 	
@@ -376,7 +349,7 @@ static void draw_net() {
 	}
 }
 
-static void draw_ball() {
+void draw_ball() {
 	SDL_Rect src;
 
 	src.x = ball.x;
@@ -391,7 +364,7 @@ static void draw_ball() {
 	}
 }
 
-static void draw_paddle() {
+void draw_paddle() {
 	SDL_Rect src;
 	for (int i = 0; i < 2; i++) {
 	
@@ -407,7 +380,7 @@ static void draw_paddle() {
 	}
 }
 
-static void draw_player_0_score() {	
+void draw_player_0_score() {	
 	SDL_Rect src;
 	SDL_Rect dest;
 
@@ -427,7 +400,7 @@ static void draw_player_0_score() {
 	SDL_BlitSurface(numbermap, &src, screen, &dest);
 }
 
-static void draw_player_1_score() {	
+void draw_player_1_score() {	
 	SDL_Rect src;
 	SDL_Rect dest;
 
