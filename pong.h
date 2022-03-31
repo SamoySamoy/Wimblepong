@@ -1,6 +1,7 @@
 #pragma once // include guard
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 #include <cstring>
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,6 +39,7 @@ SDL_Surface *end;
 
 //textures
 SDL_Texture *screen_texture;
+
 
 //Function declarations
 void run();

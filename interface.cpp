@@ -124,7 +124,7 @@ void draw_menu() {
 	SDL_BlitSurface(title, &src, screen, &dest);
 }
 
-void draw_background() {
+/* void draw_background() {
  
 	SDL_Rect src;
 	
@@ -141,7 +141,7 @@ void draw_background() {
 		
 	//	printf("fill rectangle faliled in func draw_background()");
 	//}
-}
+} */
 
 void draw_net() {
 
