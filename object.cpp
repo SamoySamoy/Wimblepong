@@ -27,26 +27,34 @@ void draw_ball() {
 	src.y = ball.y;
 	src.w = ball.w;
 	src.h = ball.h;
-	
-	int r = SDL_FillRect(screen , &src, 0xffffffff);
+
+	int r = SDL_FillRect(screen , &src, SDL_MapRGB(screen->format, 53, 255, 13));
 	if (r != 0){	
 		printf("fill rectangle faliled in func drawball()");
 	}
 }
 
 void draw_paddle() {
-	SDL_Rect src;
-	for (int i = 0; i < 2; i++) {
-	
+	SDL_Rect src1, src2;
+	/* for (int i = 0; i < 2; i++) {	
 		src.x = paddle[i].x;
 		src.y = paddle[i].y;
 		src.w = paddle[i].w;
-		src.h = paddle[i].h;
-	    
-		int r = SDL_FillRect(screen, &src, 0xffffffff);
-		if (r != 0){		
-			printf("fill rectangle faliled in func draw_paddle()");
-		}
+		src.h = paddle[i].h;		
+	} */
+	src1.x = paddle[0].x;
+	src1.y = paddle[0].y;
+	src1.w = paddle[0].w;
+	src1.h = paddle[0].h;
+
+	src2.x = paddle[1].x;
+	src2.y = paddle[1].y;
+	src2.w = paddle[1].w;
+	src2.h = paddle[1].h;
+ 	int r1 = SDL_FillRect(screen, &src1, SDL_MapRGB(screen->format, 0, 0, 255));
+	int r2 = SDL_FillRect(screen, &src2, SDL_MapRGB(screen->format, 255, 0, 0));
+	if (r1 != 0 || r2 != 0){	
+		printf("fill rectangle faliled in func drawball()");
 	}
 }
 

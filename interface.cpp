@@ -154,7 +154,7 @@ void draw_net() {
 
 	//draw the net
 	for(int i = 0; i < 15; i++) {		
-		int r = SDL_FillRect(screen, &net, 0xffffffff);
+		int r = SDL_FillRect(screen, &net, SDL_MapRGB(screen->format, 231, 60, 231));
 		if (r != 0) { 	
 			printf("fill rectangle faliled in func draw_net()");
 		}
