@@ -25,7 +25,6 @@ void draw_menu()
 {
 	SDL_Rect src;
 	SDL_Rect dest;
-
 	src.x = 0;
 	src.y = 0;
 	src.w = title->w;
@@ -40,23 +39,21 @@ void draw_menu()
 }
 void draw_net() 
 {
-	SDL_Rect net1, net2;
+	SDL_Rect net;
+	
+	net.x = screen->w / 2 + 3;
+	net.y = 6;
+	net.w = 7;
+	net.h = 15;
 
-	net1.x = screen->w / 2 - 5;
-	net1.y = 20;
-	net1.w = 5;
-	net1.h = screen->h - 30;
-    
-	net2.x = screen->w / 2 + 10;
-	net2.y = 20;
-	net2.w = 5;
-	net2.h = screen->h - 30;
-	//draw the net		
-	int r1 = SDL_FillRect(screen, &net1, SDL_MapRGB(screen->format, 255, 255, 255));
-	int r2 = SDL_FillRect(screen, &net2, SDL_MapRGB(screen->format, 255, 255, 255));
-	if (r1 != 0 || r2 != 0) { 	
-		cout << "fill rectangle faliled in func draw_net()";
-	}
+	//draw the net
+	for(int i = 0; i < 30; i++) {
+		int r = SDL_FillRect(screen, &net, 0xffffffff);
+		if (r != 0) { 
+			printf("fill rectangle faliled in func draw_net()");
+		}
+		net.y = net.y + 30;
+	}		
 }
 
 void draw_border(int line)
@@ -68,15 +65,12 @@ void draw_border(int line)
 	border.w = screen->w / 15;
 	border.h = screen->h;
 
-	for (int i = 0; i < 15; i++)
+	int r = SDL_FillRect(screen, &border, SDL_MapRGB(screen->format, 0, 77, 0));
+	if (r != 0)
 	{
-		int r = SDL_FillRect(screen, &border, SDL_MapRGB(screen->format, 0, 77, 0));
-		if (r != 0)
-		{
-			cout << "Function draw_border failed!";
-		}
-		border.y = border.y + 30;
+		cout << "Function draw_border failed!"; 
 	}
+
 }
 
 int check_collision(ball_class a, paddle_class b)
