@@ -1,63 +1,60 @@
 #pragma once // include guard
 #include "pong.h"
+#include "pong.cpp"
+#include <iostream>
+using namespace std;
 
 void init_game() {
-	ball.x = screen->w / 2;
-	ball.y = screen->h / 2;
-	ball.w = 10;
-	ball.h = 10;
-	ball.dy = 1;
-	ball.dx = 1;
-	
 	paddle[0].x = 20;
 	paddle[0].y = screen->h / 2 - 50 ;
 	paddle[0].w = 10;
 	paddle[0].h = 50;
 
-	paddle[1].x = screen->w - 20 - 10;
+	paddle[1].x = screen->w - 30;
 	paddle[1].y = screen->h / 2 - 50;
 	paddle[1].w = 10;
 	paddle[1].h = 50;
+
+	ball.x = screen->w / 2;
+	ball.y = screen->h / 2;
+	ball.w = 10;
+	ball.h = 10;
+	ball.dx = 1;
+	ball.dy = 1;
+	
 }
 
 void draw_ball() {
-	SDL_Rect src;
+	SDL_Rect rec;
 
-	src.x = ball.x;
-	src.y = ball.y;
-	src.w = ball.w;
-	src.h = ball.h;
+	rec.x = ball.x;
+	rec.y = ball.y;
+	rec.w = ball.w;
+	rec.h = ball.h;
 
-	int r = SDL_FillRect(screen , &src, SDL_MapRGB(screen->format, 53, 255, 13));
-	if (r != 0){	
-		printf("fill rectangle faliled in func drawball()");
+	int r = SDL_FillRect(screen , &rec, SDL_MapRGB(screen->format, 53, 255, 13));
+	if (r != 0) {	
+		cout << "fill rectangle failed in func drawball()";
 	}
 }
 
 void draw_paddle() {
-	SDL_Rect src1, src2;
-	/* for (int i = 0; i < 2; i++) {	
-		src.x = paddle[i].x;
-		src.y = paddle[i].y;
-		src.w = paddle[i].w;
-		src.h = paddle[i].h;		
-	} */
-	src1.x = paddle[0].x;
-	src1.y = paddle[0].y;
-	src1.w = paddle[0].w;
-	src1.h = paddle[0].h;
+	SDL_Rect rec1, rec2;
+	rec1.x = paddle[0].x;
+	rec1.y = paddle[0].y;
+	rec1.w = paddle[0].w;
+	rec1.h = paddle[0].h;
 
-	src2.x = paddle[1].x;
-	src2.y = paddle[1].y;
-	src2.w = paddle[1].w;
-	src2.h = paddle[1].h;
- 	int r1 = SDL_FillRect(screen, &src1, SDL_MapRGB(screen->format, 0, 0, 255));
-	int r2 = SDL_FillRect(screen, &src2, SDL_MapRGB(screen->format, 255, 0, 0));
+	rec2.x = paddle[1].x;
+	rec2.y = paddle[1].y;
+	rec2.w = paddle[1].w;
+	rec2.h = paddle[1].h;
+ 	int r1 = SDL_FillRect(screen, &rec1, SDL_MapRGB(screen->format, 0, 0, 255));
+	int r2 = SDL_FillRect(screen, &rec2, SDL_MapRGB(screen->format, 255, 0, 0));
 	if (r1 != 0 || r2 != 0){	
-		printf("fill rectangle faliled in func drawball()");
+		cout << "fill rectangle faliled in func drawball()";
 	}
 }
-
 
 void move_ball() {
 	
@@ -84,6 +81,7 @@ void move_ball() {
 		int c = check_collision(ball, paddle[i]); 
 		//collision detected	
 		if (c == 1) {
+			Mix_PlayChannel(-1, sound, 0);
 			//ball moving left
 			if (ball.dx < 0) {	
 				ball.dx -= 1;

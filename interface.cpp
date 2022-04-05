@@ -1,4 +1,5 @@
 #include "pong.h"
+#include <iostream>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ int sdl_init(int width, int height) {
 	//Load the numbermap image
 	numbermap = SDL_LoadBMP("numbermap.bmp");
 	//Load the gameover image
-	end = SDL_LoadBMP("gameover.bmp");
+	gameover = SDL_LoadBMP("gameover.bmp");
 	// Set the title colourkey. 
 	Uint32 colorkey = SDL_MapRGB(title->format, 255, 0, 255);
 	SDL_SetColorKey(title, SDL_TRUE, colorkey);
@@ -77,33 +78,32 @@ void draw_game_over(int p) {
 
 	p1.x = 0;
 	p1.y = 0;
-	p1.w = end->w;
+	p1.w = gameover->w;
 	p1.h = 75;
 
 	p2.x = 0;
 	p2.y = 75;
-	p2.w = end->w;
+	p2.w = gameover->w;
 	p2.h = 75;
 	
 	cpu.x = 0;
 	cpu.y = 150;
-	cpu.w = end->w;
+	cpu.w = gameover->w;
 	cpu.h = 75;
 
-	dest.x = (screen->w / 2) - (end->w / 2);
+	dest.x = (screen->w / 2) - (gameover->w / 2);
 	dest.y = (screen->h / 2) - (75 / 2);
-	dest.w = end->w;
+	dest.w = gameover->w;
 	dest.h = 75;
-	
 	switch (p) {	
 		case 1:			
-			SDL_BlitSurface(end, &p1, screen, &dest);
+			SDL_BlitSurface(gameover, &p1, screen, &dest);
 			break;
 		case 2:
-			SDL_BlitSurface(end, &p2, screen, &dest);
+			SDL_BlitSurface(gameover, &p2, screen, &dest);
 			break;
 		default:
-			SDL_BlitSurface(end, &cpu, screen, &dest);
+			SDL_BlitSurface(gameover, &cpu, screen, &dest);
 	}	
 }
 
@@ -123,8 +123,8 @@ void draw_menu() {
 
 	SDL_BlitSurface(title, &src, screen, &dest);
 }
-
-/* void draw_background() {
+/* 
+ void draw_background() {
  
 	SDL_Rect src;
 	
@@ -141,7 +141,7 @@ void draw_menu() {
 		
 	//	printf("fill rectangle faliled in func draw_background()");
 	//}
-} */
+}  */
 
 void draw_net() {
 
@@ -156,7 +156,7 @@ void draw_net() {
 	for(int i = 0; i < 15; i++) {		
 		int r = SDL_FillRect(screen, &net, SDL_MapRGB(screen->format, 231, 60, 231));
 		if (r != 0) { 	
-			printf("fill rectangle faliled in func draw_net()");
+			cout << "fill rectangle faliled in func draw_net()";
 		}
 		net.y = net.y + 30;
 	}

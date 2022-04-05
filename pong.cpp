@@ -1,19 +1,23 @@
+#pragma once
 #include "pong.h"
 #include "object.cpp"
 
-void run()
-{
-	Mix_Music* music = NULL;
+void loadMusic() {
+	// Loading background music 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
 	{
-		printf("%s", Mix_GetError());
+		Mix_GetError();
 	}
-	music = Mix_LoadMUS("audio1.mp3");
-	if (music == NULL)
+	bg = Mix_LoadMUS("audio.mp3");
+	sound = Mix_LoadWAV("effect.wav");
+	if (bg == NULL || sound == NULL)
 	{
 		printf("%s", Mix_GetError());
 	}
-	Mix_PlayMusic(music, -1);
+}
+void run()
+{   
+	Mix_PlayMusic(bg, -1);
 	sdl_init(SCREEN_WIDTH, SCREEN_HEIGHT);
 	int sleep = 0;
 	int quit = 0;
@@ -107,7 +111,7 @@ void run()
 	SDL_FreeSurface(screen);
 	SDL_FreeSurface(title);
 	SDL_FreeSurface(numbermap);
-	SDL_FreeSurface(end);
+	SDL_FreeSurface(gameover);
 	// free renderer and all textures used with it
 	SDL_DestroyRenderer(renderer);
 	// Destroy window
