@@ -3,16 +3,17 @@
 #include "object.cpp"
 
 void loadMusic() {
-	// Loading background music 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
 	{
 		Mix_GetError();
 	}
+	// Load background music 
 	bg = Mix_LoadMUS("audio.mp3");
+	// Load sound effect audio
 	sound = Mix_LoadWAV("effect.wav");
 	if (bg == NULL || sound == NULL)
 	{
-		printf("%s", Mix_GetError());
+		cout << Mix_GetError();
 	}
 }
 void run()
@@ -23,30 +24,19 @@ void run()
 	int quit = 0;
 	int state = 0;
 	int r = 0;
-	Uint32 next_game_tick = SDL_GetTicks();
-	// Initialize the ball position data.
+	Uint64 next_game_tick = SDL_GetTicks64();
 	init_game();
-	// render loop
 	while (quit == 0)
 	{
 		// check for new events every frame
 		SDL_PumpEvents();
 		const Uint8 *keystate = SDL_GetKeyboardState(NULL);
-		if (keystate[SDL_SCANCODE_ESCAPE])
-		{
-			quit = 1;
-		}
-		if (keystate[SDL_SCANCODE_DOWN])
-		{
-			move_paddle(0);
-		}
-		if (keystate[SDL_SCANCODE_UP])
-		{
-			move_paddle(1);
-		}
+		if (keystate[SDL_SCANCODE_ESCAPE]) quit = 1;
+		if (keystate[SDL_SCANCODE_DOWN]) move_paddle(0);
+		if (keystate[SDL_SCANCODE_UP]) move_paddle(1);
 		// draw background
 		SDL_RenderClear(renderer);
-		SDL_FillRect(screen, NULL, 0x000000ff);
+		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 77, 38));
 		// display main menu
 		if (state == 0)
 		{
@@ -86,11 +76,12 @@ void run()
 			if (r == 1 || r == 2)
 				state = 2;
 			move_paddle_ai();
-			// Move the balls for the next frame.
 			move_ball();
 			draw_net();
+			for (int i = 0; i < 8; i++) {
+                draw_border(295 - i * 80);
+			}
 			draw_paddle();
-			// Put the ball on the screen.
 			draw_ball();
 			draw_player_0_score();
 			draw_player_1_score();

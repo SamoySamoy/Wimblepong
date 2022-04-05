@@ -21,7 +21,6 @@ void init_game() {
 	ball.h = 10;
 	ball.dx = 1;
 	ball.dy = 1;
-	
 }
 
 void draw_ball() {
@@ -32,9 +31,9 @@ void draw_ball() {
 	rec.w = ball.w;
 	rec.h = ball.h;
 
-	int r = SDL_FillRect(screen , &rec, SDL_MapRGB(screen->format, 53, 255, 13));
+	int r = SDL_FillRect(screen , &rec, SDL_MapRGB(screen->format, 43, 255, 0));
 	if (r != 0) {	
-		cout << "fill rectangle failed in func drawball()";
+		cout << "fill rectangle failed in func draw_ball()";
 	}
 }
 
@@ -49,15 +48,14 @@ void draw_paddle() {
 	rec2.y = paddle[1].y;
 	rec2.w = paddle[1].w;
 	rec2.h = paddle[1].h;
- 	int r1 = SDL_FillRect(screen, &rec1, SDL_MapRGB(screen->format, 0, 0, 255));
-	int r2 = SDL_FillRect(screen, &rec2, SDL_MapRGB(screen->format, 255, 0, 0));
+ 	int r1 = SDL_FillRect(screen, &rec1, SDL_MapRGB(screen->format, 255, 255, 255));
+	int r2 = SDL_FillRect(screen, &rec2, SDL_MapRGB(screen->format, 255, 255, 255));
 	if (r1 != 0 || r2 != 0){	
-		cout << "fill rectangle faliled in func drawball()";
+		cout << "fill rectangle faliled in func draw_paddle()";
 	}
 }
 
 void move_ball() {
-	
 	/* Move the ball by its motion vector. */
 	ball.x += ball.dx;
 	ball.y += ball.dy;
@@ -81,6 +79,7 @@ void move_ball() {
 		int c = check_collision(ball, paddle[i]); 
 		//collision detected	
 		if (c == 1) {
+			// Collision sound effect 
 			Mix_PlayChannel(-1, sound, 0);
 			//ball moving left
 			if (ball.dx < 0) {	
@@ -91,49 +90,38 @@ void move_ball() {
 			}
 			//change ball direction
 			ball.dx = -ball.dx;
-			
 			//change ball angle based on where on the paddle it hit
 			int hit_pos = (paddle[i].y + paddle[i].h) - ball.y;
-
 			if (hit_pos >= 0 && hit_pos < 7) {
 				ball.dy = 4;
 			}
-
 			if (hit_pos >= 7 && hit_pos < 14) {
 				ball.dy = 3;
 			}
-			
 			if (hit_pos >= 14 && hit_pos < 21) {
 				ball.dy = 2;
 			}
-
 			if (hit_pos >= 21 && hit_pos < 28) {
 				ball.dy = 1;
 			}
-
 			if (hit_pos >= 28 && hit_pos < 32) {
 				ball.dy = 0;
 			}
-
 			if (hit_pos >= 32 && hit_pos < 39) {
 				ball.dy = -1;
 			}
-
 			if (hit_pos >= 39 && hit_pos < 46) {
 				ball.dy = -2;
 			}
-
 			if (hit_pos >= 46 && hit_pos < 53) {
 				ball.dy = -3;
 			}
-
 			if (hit_pos >= 53 && hit_pos <= 60) {
 				ball.dy = -4;
 			}
-
 			//ball moving right
 			if (ball.dx > 0) {
-				//teleport ball to avoid mutli collision glitch
+				//teleport ball to avoid multi collision glitch
 				if (ball.x < 30) {			
 					ball.x = 30;
 				}
