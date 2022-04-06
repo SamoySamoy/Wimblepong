@@ -1,3 +1,4 @@
+#pragma once
 #include "pong.h"
 #include <iostream>
 
@@ -21,6 +22,22 @@ int sdl_init(int width, int height)
 	return 0;
 }
 
+void loadMusic() {
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+	{
+		Mix_GetError();
+	}
+	// Load background music 
+	bg = Mix_LoadMUS("audio.mp3");
+	// Load sound effect audio
+	ball_effect = Mix_LoadMUS("ball.mp3");
+	clap = Mix_LoadMUS("clap.mp3");
+	if (bg == NULL || ball_effect == NULL || clap == NULL)
+	{
+		cout << Mix_GetError();
+	}
+}
+
 void draw_menu()
 {
 	SDL_Rect src;
@@ -37,6 +54,23 @@ void draw_menu()
 
 	SDL_BlitSurface(title, &src, screen, &dest);
 }
+
+void draw_stripe(int line)
+{
+	SDL_Rect border;
+
+    border.x = 0;
+	border.y = screen->h / 2 - line;
+	border.w = screen->w;
+	border.h = screen->h / 17;
+
+	int r = SDL_FillRect(screen, &border, SDL_MapRGB(screen->format, 0, 77, 0));
+	if (r != 0)
+	{
+		cout << "Function draw_border failed!"; 
+	}
+}
+
 void draw_net() 
 {
 	SDL_Rect net;
@@ -49,30 +83,63 @@ void draw_net()
 	//draw the net
 	for(int i = 0; i < 30; i++) {
 		int r = SDL_FillRect(screen, &net, 0xffffffff);
-		if (r != 0) { 
-			printf("fill rectangle faliled in func draw_net()");
-		}
+		if (r != 0) cout << "fill rectangle faliled in func draw_net()";
 		net.y = net.y + 30;
 	}		
 }
 
-void draw_border(int line)
-{
-	SDL_Rect border;
-
-	border.x = screen->w / 2 - line;
-	border.y = 0;
-	border.w = screen->w / 15;
-	border.h = screen->h;
-
-	int r = SDL_FillRect(screen, &border, SDL_MapRGB(screen->format, 0, 77, 0));
-	if (r != 0)
-	{
-		cout << "Function draw_border failed!"; 
-	}
-
+void draw_vertical_line(int pos) {
+	SDL_Rect line;
+	line.x = pos;
+	line.y = 10;
+	line.w = 5;
+	line.h = screen->h - 20;
+	int r = SDL_FillRect(screen, &line, SDL_MapRGB(screen->format, 255, 255, 255));
+	if (r != 0) cout << "fill rectangle failed in func draw_line()";
 }
 
+void draw_horizontal_line(int pos) {
+	SDL_Rect line;
+	line.x = 10;
+	line.y = pos;
+	line.w = screen->w - 15;
+	line.h = 5;
+	int r = SDL_FillRect(screen, &line, SDL_MapRGB(screen->format, 255, 255, 255));
+	if (r != 0) cout << "fill rectangle failed in func draw_line";
+}
+
+void draw_vertical_line1(int pos) {
+	SDL_Rect line;
+	line.x = pos;
+	line.y = 65;
+	line.w = 5;
+	line.h = screen->h - 120;
+	int r = SDL_FillRect(screen, &line, SDL_MapRGB(screen->format, 255, 255, 255));
+	if (r != 0) cout << "fill rectangle failed in func draw_line";
+}
+
+void draw_horizontal_line1() {
+	SDL_Rect line;
+	line.x = 150;
+	line.y = 240;
+	line.w = screen->w - 300;
+	line.h = 5;
+	int r = SDL_FillRect(screen, &line, SDL_MapRGB(screen->format, 255, 255, 255));
+	if (r != 0) cout << "fill rectangle failed in func draw_line";
+}
+
+void draw_line() {
+	draw_net();
+	draw_vertical_line(10);
+	draw_vertical_line(630);
+	draw_horizontal_line(10);
+	draw_horizontal_line(470);
+	draw_horizontal_line(60);
+	draw_horizontal_line(420);
+	draw_vertical_line1(150);
+	draw_vertical_line1(490);
+    draw_horizontal_line1();
+}
 int check_collision(ball_class a, paddle_class b)
 {
 	int left_a = a.x;
@@ -122,7 +189,7 @@ void draw_player_0_score()
 	src.h = 64;
 
 	dest.x = (screen->w / 2) - src.w - 12; // 12 is just padding spacing
-	dest.y = 0;
+	dest.y = 5;
 	dest.w = 64;
 	dest.h = 64;
 
@@ -144,7 +211,7 @@ void draw_player_1_score()
 	src.h = 64;
 
 	dest.x = (screen->w / 2) + 12;
-	dest.y = 0;
+	dest.y = 5;
 	dest.w = 64;
 	dest.h = 64;
 

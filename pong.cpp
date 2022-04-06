@@ -2,20 +2,6 @@
 #include "pong.h"
 #include "object.cpp"
 
-void loadMusic() {
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
-	{
-		Mix_GetError();
-	}
-	// Load background music 
-	bg = Mix_LoadMUS("audio.mp3");
-	// Load sound effect audio
-	sound = Mix_LoadWAV("effect.wav");
-	if (bg == NULL || sound == NULL)
-	{
-		cout << Mix_GetError();
-	}
-}
 void run()
 {   
 	Mix_PlayMusic(bg, -1);
@@ -73,14 +59,13 @@ void run()
 			// check score
 			r = check_score();
 			// if either player wins, change to game over state
-			if (r == 1 || r == 2)
-				state = 2;
+			if (r == 1 || r == 2) state = 2;
 			move_paddle_ai();
 			move_ball();
-			draw_net();
-			for (int i = 0; i < 8; i++) {
-                draw_border(295 - i * 80);
+			for (int i = 0; i < 10; i++) {
+                draw_stripe(283- i * 60);
 			}
+			draw_line();
 			draw_paddle();
 			draw_ball();
 			draw_player_0_score();

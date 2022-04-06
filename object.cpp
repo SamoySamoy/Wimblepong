@@ -63,11 +63,13 @@ void move_ball() {
 	/* Turn the ball around if it hits the edge of the screen. */
 	if (ball.x < 0) {		
 		score[1] += 1;
+		Mix_PlayMusic(clap, 0);
 		init_game();
 	}
 
 	if (ball.x > screen->w - 10) { 		
 		score[0] += 1;
+		Mix_PlayMusic(clap, 0);
 		init_game();
 	}
 
@@ -80,7 +82,7 @@ void move_ball() {
 		//collision detected	
 		if (c == 1) {
 			// Collision sound effect 
-			Mix_PlayChannel(-1, sound, 0);
+			Mix_PlayMusic(ball_effect, 0);
 			//ball moving left
 			if (ball.dx < 0) {	
 				ball.dx -= 1;
