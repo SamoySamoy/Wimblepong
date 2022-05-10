@@ -1,41 +1,36 @@
 #pragma once
 #include "pong.h"
 #include <iostream>
-
 using namespace std;
+
+void loadMusic() {
+	// init SDL music
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+	{
+		Mix_GetError();
+	}
+	bg = Mix_LoadMUS("audio.mp3"); // Load background music 
+	ball_effect = Mix_LoadMUS("ball.mp3"); // Load ball sound
+	clap = Mix_LoadMUS("clap.mp3"); // Load clap effect
+	if (bg == NULL || ball_effect == NULL || clap == NULL)
+	{
+		cout << Mix_GetError();
+	}
+}
 
 int sdl_init(int width, int height)
 {
 	SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN, &window, &renderer);
 	screen = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA32);
 	screen_texture = SDL_CreateTextureFromSurface(renderer, screen);
-	// Load title image
-	title = SDL_LoadBMP("title.bmp");
-	// Load numbermap image
+	title = SDL_LoadBMP("pressspacetostart2.bmp");
 	numbermap = SDL_LoadBMP("numbermap.bmp");
-	// Load gameover image
 	gameover = SDL_LoadBMP("gameover.bmp");
-	// Set the title colourkey.
+	// Set the title colorkey.
 	Uint32 colorkey = SDL_MapRGB(title->format, 255, 0, 255);
 	SDL_SetColorKey(title, SDL_TRUE, colorkey);
 	SDL_SetColorKey(numbermap, SDL_TRUE, colorkey);
 	return 0;
-}
-
-void loadMusic() {
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
-	{
-		Mix_GetError();
-	}
-	// Load background music 
-	bg = Mix_LoadMUS("audio.mp3");
-	// Load sound effect audio
-	ball_effect = Mix_LoadMUS("ball.mp3");
-	clap = Mix_LoadMUS("clap.mp3");
-	if (bg == NULL || ball_effect == NULL || clap == NULL)
-	{
-		cout << Mix_GetError();
-	}
 }
 
 void draw_menu()
@@ -69,23 +64,6 @@ void draw_stripe(int line)
 	{
 		cout << "Function draw_border failed!"; 
 	}
-}
-
-void draw_net() 
-{
-	SDL_Rect net;
-	
-	net.x = screen->w / 2 + 3;
-	net.y = 6;
-	net.w = 7;
-	net.h = 15;
-
-	//draw the net
-	for(int i = 0; i < 30; i++) {
-		int r = SDL_FillRect(screen, &net, 0xffffffff);
-		if (r != 0) cout << "fill rectangle faliled in func draw_net()";
-		net.y = net.y + 30;
-	}		
 }
 
 void draw_vertical_line(int pos) {
@@ -140,6 +118,24 @@ void draw_line() {
 	draw_vertical_line1(490);
     draw_horizontal_line1();
 }
+
+void draw_net() 
+{
+	SDL_Rect net;
+	
+	net.x = screen->w / 2 + 3;
+	net.y = 6;
+	net.w = 7;
+	net.h = 15;
+
+	//draw the net
+	for(int i = 0; i < 30; i++) {
+		int r = SDL_FillRect(screen, &net, 0xffffffff);
+		if (r != 0) cout << "fill rectangle faliled in func draw_net()";
+		net.y = net.y + 30;
+	}		
+}
+
 int check_collision(ball_class a, paddle_class b)
 {
 	int left_a = a.x;
@@ -224,7 +220,6 @@ void draw_player_1_score()
 
 void draw_game_over(int p)
 {
-
 	SDL_Rect p1;
 	SDL_Rect p2;
 	SDL_Rect cpu;

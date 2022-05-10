@@ -4,42 +4,38 @@
 
 void run()
 {   
-	Mix_PlayMusic(bg, -1);
-	sdl_init(SCREEN_WIDTH, SCREEN_HEIGHT);
+	Mix_PlayMusic(bg, -1); // apply background music
+	sdl_init(SCREEN_WIDTH, SCREEN_HEIGHT); 
 	int sleep = 0;
 	int quit = 0;
 	int state = 0;
 	int r = 0;
 	Uint64 next_game_tick = SDL_GetTicks64();
 	init_game();
-	while (quit == 0)
-	{
+	while (quit == 0) 
+	{   
 		// check for new events every frame
 		SDL_PumpEvents();
-		const Uint8 *keystate = SDL_GetKeyboardState(NULL);
-		if (keystate[SDL_SCANCODE_ESCAPE]) quit = 1;
-		if (keystate[SDL_SCANCODE_DOWN]) move_paddle(0);
-		if (keystate[SDL_SCANCODE_UP]) move_paddle(1);
+		const Uint8 *keystate = SDL_GetKeyboardState(NULL); // init keystate
+		if (keystate[SDL_SCANCODE_ESCAPE]) quit = 1; // press ESC to exit the game
+		if (keystate[SDL_SCANCODE_DOWN]) move_paddle(0); // move down paddle
+		if (keystate[SDL_SCANCODE_UP]) move_paddle(1); // move up paddle 
 		// draw background
 		SDL_RenderClear(renderer);
-		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 77, 38));
+		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 77, 38)); // green background
 		// display main menu
 		if (state == 0)
 		{
-			if (keystate[SDL_SCANCODE_SPACE])
-			{
-				state = 1;
-			}
+			if (keystate[SDL_SCANCODE_SPACE]) state = 1; // press space to start the game
 			draw_menu();
-			// display gameover
 		}
+		// display gameover
 		else if (state == 2)
 		{
 			if (keystate[SDL_SCANCODE_SPACE])
 			{
 				state = 0;
-				// delay for a little bit so the space bar press dosnt get triggered twice
-				// while the main menu is showing
+				// delay for a little bit so the space bar press doesn't get triggered twice
 				SDL_Delay(500);
 			}
 			if (r == 1)
@@ -52,8 +48,8 @@ void run()
 				// display gameover
 				draw_game_over(r);
 			}
-			// display the game
 		}
+		//display the game
 		else if (state == 1)
 		{
 			// check score
@@ -62,6 +58,7 @@ void run()
 			if (r == 1 || r == 2) state = 2;
 			move_paddle_ai();
 			move_ball();
+			// quick adding stripes for the court
 			for (int i = 0; i < 10; i++) {
                 draw_stripe(283- i * 60);
 			}

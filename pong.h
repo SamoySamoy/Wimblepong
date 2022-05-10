@@ -11,25 +11,6 @@ using namespace std;
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_WIDTH = 640;	
 
-class paddle_class {
-public:	
-	int x, y;  // position on the screen
-	int w, h; // width and height
-};
-
-class ball_class {
-public:	
-	int x, y; 
-	int w, h;
-	int dx, dy; // movement vector
-};
-
-
-// Global setup
-ball_class ball;
-paddle_class paddle[2];
-int score[] = {0,0};
-
 Mix_Music *bg = NULL;
 Mix_Music *ball_effect = NULL;
 Mix_Music *clap = NULL;
@@ -40,6 +21,23 @@ SDL_Surface *title;
 SDL_Surface *numbermap;
 SDL_Surface *gameover;
 SDL_Texture *screen_texture;
+
+class paddle_class {
+public:	
+	int x, y;  // position on the screen
+	int w, h; // width, height
+};
+
+class ball_class {
+public:	
+	int x, y; 
+	int w, h;
+	int dx, dy; // movement vector
+};
+
+ball_class ball;
+paddle_class paddle[2];
+int score[] = {0,0}; // two players
 
 //Function declarations
 void loadMusic();

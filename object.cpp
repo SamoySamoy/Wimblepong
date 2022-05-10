@@ -1,6 +1,5 @@
 #pragma once // include guard
 #include "pong.h"
-#include "pong.cpp"
 #include <iostream>
 using namespace std;
 
